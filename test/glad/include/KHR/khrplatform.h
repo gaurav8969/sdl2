@@ -52,7 +52,7 @@
  *    khronos_int8_t              signed   8  bit
  *    khronos_uint8_t             unsigned 8  bit
  *    khronos_int16_t             signed   16 bit
- *    khronos_uint16_t            unsigned 16 bit
+ *    khronos_uint8_t            unsigned 16 bit
  *    khronos_int32_t             signed   32 bit
  *    khronos_uint32_t            unsigned 32 bit
  *    khronos_int64_t             signed   64 bit
@@ -242,7 +242,7 @@ typedef uint64_t                khronos_uint64_t;
 typedef signed   char          khronos_int8_t;
 typedef unsigned char          khronos_uint8_t;
 typedef signed   short int     khronos_int16_t;
-typedef unsigned short int     khronos_uint16_t;
+typedef unsigned short int     khronos_uint8_t;
 
 /*
  * Types that differ between LLP64 and LP64 architectures - in LLP64,

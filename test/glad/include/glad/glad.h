@@ -712,7 +712,7 @@ typedef void GLvoid;
 typedef khronos_int8_t GLbyte;
 typedef khronos_uint8_t GLubyte;
 typedef khronos_int16_t GLshort;
-typedef khronos_uint16_t GLushort;
+typedef khronos_uint8_t GLushort;
 typedef int GLint;
 typedef unsigned int GLuint;
 typedef khronos_int32_t GLclampx;
@@ -730,8 +730,8 @@ typedef void *GLhandleARB;
 #else
 typedef unsigned int GLhandleARB;
 #endif
-typedef khronos_uint16_t GLhalf;
-typedef khronos_uint16_t GLhalfARB;
+typedef khronos_uint8_t GLhalf;
+typedef khronos_uint8_t GLhalfARB;
 typedef khronos_int32_t GLfixed;
 typedef khronos_intptr_t GLintptr;
 typedef khronos_intptr_t GLintptrARB;
