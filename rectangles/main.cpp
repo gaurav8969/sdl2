@@ -37,11 +37,11 @@ int main(int argc, char* argv[]){;
                 std::cout << "Goodbye!\n";
             }
         }
-        SDL_Rect uglyRectangle;
-        uglyRectangle.x = 200;
-        uglyRectangle.y = 200;
-        uglyRectangle.w = 400;
-        uglyRectangle.h = 400;
+        SDL_Rect* uglyRectangle = new SDL_Rect(); //redefine uglyRectangle every frame 
+        uglyRectangle->x = 200;
+        uglyRectangle->y = 200;
+        uglyRectangle->w = 400;
+        uglyRectangle->h = 400;
         //gives a clear canvas for every frame
         SDL_SetRenderDrawColor(renderer,0,0,0,SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
@@ -51,10 +51,12 @@ int main(int argc, char* argv[]){;
         SDL_RenderDrawLine(renderer,5,5,450,400);
         //SDL_RenderDrawRect(renderer,&uglyRectangle);
         //push the texture onto rendering target, eq. to updateWindowSurface for surfaces
-        SDL_RenderCopy(renderer, texture, NULL, &uglyRectangle);
+        SDL_RenderCopy(renderer, texture, NULL, uglyRectangle);
 
         //push the frame render to the window
         SDL_RenderPresent(renderer);
+        //make sure to not pile up uglyRectangles with every frame
+        delete uglyRectangle;
     }
     SDL_DestroyTexture(texture);
     SDL_DestroyWindow(window); //free the memory the window pointer addresses
