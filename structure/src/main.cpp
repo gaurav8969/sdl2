@@ -9,9 +9,11 @@
 //third party library
 #include <SDL2/SDL.h>
 
-#include "../include/TexturedRectangle.hpp"
+#include "TexturedRectangle.hpp"
+#include "ResourceManager.hpp"
+#include "AnimateSprite.hpp"
 
-int main(int argc, char* argv[]){;
+int main(int argc, char* argv[]){
     if(SDL_Init(SDL_INIT_VIDEO) < 0){
         std::cout << "SDL could not be initialized: " << SDL_GetError();
     }
@@ -26,22 +28,19 @@ int main(int argc, char* argv[]){;
     SDL_Renderer* renderer = nullptr;
     renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
 
-    TexturedRectangle rectangle2(renderer, "/home/yash/repos/sdl2/abstractShapes/images/waterTexture.bmp");
-    rectangle2.setRectangleProperties(300,0,200,200);
+    //Don't call delete on surface, managed by resource manager
+    SDL_Surface* surface = ResourceManager::GetInstance().GetSurface("./assets/animatedSprite.bmp"); 
+    /*^^for the above image path, remember that for compiled binaries, all relative paths are so
+    to the dir you run the executable from, in our case it is the directory of the build script*/
+    
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+    AnimateSprite sprite;
+    AnimateSprite sprite2;
+    sprite.draw(0,0,250,250);
+    sprite2.draw(200,200,250,250);
 
-    std::vector<std::unique_ptr<TexturedRectangle>>rects;
-
-    for(int i = 0; i < 34; i++){
-        std::unique_ptr<TexturedRectangle> rect = std::make_unique<TexturedRectangle>(renderer,"/home/yash/repos/sdl2/abstractShapes/images/waterTexture.bmp");
-        rects.push_back(std::move(rect)); //move assignment operator invoked
-    }
-
-    int rectPos = 10; 
-    for(auto& rect:rects){
-        rectPos *= 1.1;
-        rect->setRectangleProperties(rectPos,rectPos,rectPos,rectPos*2);
-    }
-
+    int frameNo = 0;
+    int frameNo2 = 0;
     bool gameIsRunning = true;
     while(gameIsRunning){
         SDL_Event event;
@@ -56,14 +55,25 @@ int main(int argc, char* argv[]){;
         //gives a clear canvas for every frame
         SDL_SetRenderDrawColor(renderer,0,0,255,SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
-        
-        //actual drawing
+    
+        //new drawing colour
         SDL_SetRenderDrawColor(renderer,255,255,255,SDL_ALPHA_OPAQUE);
 
-        //push the frame render to the window
-        for(const auto& rect: rects){
-            rect->render();
+        sprite.setFrame(0,1,144,144,frameNo++); //sprite1
+        if(frameNo > 4){
+            frameNo = 0;
         }
+
+        sprite2.setFrame(0,2,144,144,frameNo2++); //sprite2
+        if(frameNo2 > 5){
+            frameNo2 = 0;
+        }
+
+        sprite.render(renderer,texture);
+        sprite2.render(renderer,texture);
+        SDL_Delay(100);
+
+        //push the frame render to the window
         SDL_RenderPresent(renderer);
     }
 
