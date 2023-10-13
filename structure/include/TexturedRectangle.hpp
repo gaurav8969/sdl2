@@ -12,8 +12,11 @@ class TexturedRectangle{
         ~TexturedRectangle();
 
         void setRectangleProperties(int, int, int, int);
+        void setRectanglePosition(int, int); //helps debug
         void update();
         void render(SDL_Rect* = nullptr);
+        bool isColliding(const TexturedRectangle&);
+        void getCoordinates();
 
     private:
     SDL_Rect m_rectangle;
