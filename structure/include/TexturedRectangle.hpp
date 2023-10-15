@@ -1,3 +1,6 @@
+#ifndef TEXTURED_RECTANGLE_HPP
+#define TEXTURED_RECTANGLE_HPP
+
 #include <string>
 #include <SDL2/SDL.h>
 
@@ -5,7 +8,7 @@
 
 class TexturedRectangle{
     public:
-        TexturedRectangle( SDL_Renderer* rendererPtr, std::string fn);
+        TexturedRectangle( SDL_Renderer* rendererPtr, const std::string fn);
 
         //compiler-generated copy constructor works, shallow copy is desired
 
@@ -13,7 +16,6 @@ class TexturedRectangle{
 
         void setRectangleProperties(int, int, int, int);
         void setRectanglePosition(int, int); //helps debug
-        void update();
         void render(SDL_Rect* = nullptr);
         bool isColliding(const TexturedRectangle&);
         void getCoordinates();
@@ -25,3 +27,4 @@ class TexturedRectangle{
     SDL_Renderer* m_renderer;
 
 };
+#endif

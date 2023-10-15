@@ -4,16 +4,17 @@
 #include "TexturedRectangle.hpp"
 #include "ResourceManager.hpp"
 
-TexturedRectangle::TexturedRectangle(SDL_Renderer* rendererPtr, std::string fn):m_renderer(rendererPtr){
-            m_surface = ResourceManager::GetInstance().GetSurface(fn); 
-            m_texture = SDL_CreateTextureFromSurface(m_renderer,m_surface);
+TexturedRectangle::TexturedRectangle
+(SDL_Renderer* rendererPtr, const std::string fn):m_renderer(rendererPtr){
+    m_surface = ResourceManager::GetInstance().GetSurface(fn); 
+    m_texture = SDL_CreateTextureFromSurface(m_renderer,m_surface);
 }
-
 
 TexturedRectangle::~TexturedRectangle(){
     SDL_DestroyTexture(m_texture);
 }
 
+//set rectangle properties ig
 void TexturedRectangle::setRectangleProperties (int x, int y, int w, int h){
     m_rectangle.x = x;
     m_rectangle.y = y;
@@ -33,9 +34,7 @@ void TexturedRectangle::getCoordinates(){
     std::cout << "h is " << m_rectangle.h << std::endl;
 }
 
-void TexturedRectangle::update(){
 
-}
 
 void TexturedRectangle::render(SDL_Rect* source){
      //textured rectangles have generalized use due to render copy using rectangles
@@ -73,5 +72,5 @@ bool TexturedRectangle::isColliding(const TexturedRectangle& rectangle){
         yOverlap = true;
     }
 
-    return (xOverlap && yOverlap);
+    return xOverlap && yOverlap;
 }
