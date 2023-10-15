@@ -1,3 +1,4 @@
+//this class wraps around the SDL2 API, so as to not bog down the main function game logic
 #include <iostream>
 #include <exception>
 

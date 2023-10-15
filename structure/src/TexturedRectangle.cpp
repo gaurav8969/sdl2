@@ -8,6 +8,10 @@ TexturedRectangle::TexturedRectangle
 (SDL_Renderer* rendererPtr, const std::string fn):m_renderer(rendererPtr){
     m_surface = ResourceManager::GetInstance().GetSurface(fn); 
     m_texture = SDL_CreateTextureFromSurface(m_renderer,m_surface);
+    m_rectangle.x = 100;
+    m_rectangle.y = 100;
+    m_rectangle.w = 100;
+    m_rectangle.h = 100;
 }
 
 TexturedRectangle::~TexturedRectangle(){
@@ -15,14 +19,12 @@ TexturedRectangle::~TexturedRectangle(){
 }
 
 //set rectangle properties ig
-void TexturedRectangle::setRectangleProperties (int x, int y, int w, int h){
-    m_rectangle.x = x;
-    m_rectangle.y = y;
+void TexturedRectangle::setDimensions (int w, int h){
     m_rectangle.w = w;
     m_rectangle.h = h;
 }
 
-void TexturedRectangle::setRectanglePosition(int x, int y){
+void TexturedRectangle::setPosition(int x, int y){
     m_rectangle.x = x;
     m_rectangle.y = y;
 }

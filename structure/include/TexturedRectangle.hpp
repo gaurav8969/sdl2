@@ -11,11 +11,10 @@ class TexturedRectangle{
         TexturedRectangle( SDL_Renderer* rendererPtr, const std::string fn);
 
         //compiler-generated copy constructor works, shallow copy is desired
-
         ~TexturedRectangle();
 
-        void setRectangleProperties(int, int, int, int);
-        void setRectanglePosition(int, int); //helps debug
+        void setDimensions(int, int);
+        void setPosition(int, int); //helps debug
         void render(SDL_Rect* = nullptr);
         bool isColliding(const TexturedRectangle&);
         void getCoordinates();
