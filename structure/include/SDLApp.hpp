@@ -17,14 +17,19 @@ class SDLApp{
     void runLoop();
     void stopRunLoop();
     SDL_Renderer* getRenderer();
+    void setFrameCap(int framerate);
+    int getWindowWidth();
+    int getWindowHeight();
 
     private:
-    SDL_Renderer* renderer;
+    SDL_Renderer* m_renderer;
     SDL_Window* window;
     p_eventLoop eventLoop;
     p_renderLoop renderLoop;
     bool gameIsRunning = true;
-
+    int m_windowHeight;
+    int m_windowWidth;
+    int m_framerate;
 };
 
 #endif

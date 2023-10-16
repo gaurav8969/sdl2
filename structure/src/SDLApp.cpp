@@ -20,16 +20,20 @@ SDLApp::SDLApp(const char* title, int x, int y, int w, int h){
         throw std::runtime_error("window not created");
     }
 
-    renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
-    if(!renderer){
+    m_renderer = SDL_CreateRenderer(window,-1,SDL_RENDERER_ACCELERATED);
+    if(!m_renderer){
         throw std::runtime_error("renderer not created");
     }
+
+    m_windowHeight = w;
+    m_windowWidth = h;
+    m_framerate = 90;
 
 }
 
 SDLApp::~SDLApp(){
     SDL_DestroyWindow(window);
-    SDL_DestroyRenderer(renderer);
+    SDL_DestroyRenderer(m_renderer);
 }
 
 void SDLApp::setEventCallback(p_eventLoop func){
@@ -42,8 +46,19 @@ void SDLApp::setRenderCallback(p_renderLoop func){
 
 void SDLApp::runLoop(){
     while(gameIsRunning){
+        Uint64 start = SDL_GetTicks();
         eventLoop();
+
+        SDL_SetRenderDrawColor(m_renderer,0,0,255,SDL_ALPHA_OPAQUE);
+        SDL_RenderClear(m_renderer);
         renderLoop();
+        SDL_RenderPresent(m_renderer);
+        Uint64 end = SDL_GetTicks();
+        Uint64 timeElapsed = end - start;
+        Uint64 waitTime = ((double)1/m_framerate)*1000;
+        if(timeElapsed < waitTime){
+            SDL_Delay(waitTime - timeElapsed);
+        }
     }
 }
 
@@ -52,5 +67,17 @@ void SDLApp::stopRunLoop(){
 }
 
 SDL_Renderer* SDLApp::getRenderer(){
-    return renderer;
+    return m_renderer;
+}
+
+void SDLApp::setFrameCap(int framerate){
+    m_framerate = framerate;
+}
+
+int SDLApp::getWindowWidth(){
+    return m_windowHeight;   
+}
+
+int SDLApp::getWindowHeight(){
+    return m_windowWidth;
 }

@@ -24,13 +24,14 @@ void handleRender();
 
 int main(int argc, char* argv[]){
     app = new SDLApp("Collision Detection",500,300,640,480);
-    sprite1 = new GameEntity(app->getRenderer(),"./assets/animatedSprite.bmp");
-    sprite2 = new GameEntity(app->getRenderer(), "./assets/donkeyKong.bmp");
+    sprite1 = new GameEntity(app->getRenderer(),"./assets/redBall.bmp");
+    sprite2 = new GameEntity(app->getRenderer(), "./assets/cricketBat.bmp");
     sprite1->getRect().setPosition(200,200);
     sprite2->getRect().setPosition(100,100);
     
     app->setEventCallback(handleEvents);
     app->setRenderCallback(handleRender);
+    app->setFrameCap(400);
     app->runLoop();
 
     //free allocated memory
@@ -67,9 +68,48 @@ void handleEvents(){
 }
 
 void handleRender(){
-    SDL_SetRenderDrawColor(app->getRenderer(),0,0,255,SDL_ALPHA_OPAQUE);
-    SDL_RenderClear(app->getRenderer());
+    //dynamic but not concerned with any events, so in render callback
+    static int xPos = 0;
+    static int yPos = 0;
+    static bool right = true;
+    static bool down = true;
+    static uint64_t time = SDL_GetTicks64();
+    static uint64_t wait = 0;
+    if(right){
+        ++xPos;
+    }else{
+        --xPos;
+    }
+
+    if(down){
+        ++yPos;
+    }
+    else{
+        --yPos;
+    }
+
+    if(xPos >= app->getWindowWidth()){
+        right = false;
+    }
+    else if(xPos <= 0){
+        right = true;
+    }
+
+
+    if(yPos >= app->getWindowHeight()){
+        down = false;
+    }
+    else if(yPos <= 0){
+        down = true;
+    }
+
+    sprite1->getRect().setPosition(xPos,yPos);
     sprite1->render();
     sprite2->render();
-    SDL_RenderPresent(app->getRenderer());
+
+    if(xPos == app->getWindowWidth() || xPos == 0 ){
+        wait = SDL_GetTicks64() - time;
+        time += wait;
+        std::cout << "Change in direction after: " << wait/1000.0 << " seconds!"  << std::endl;
+    }
 }
