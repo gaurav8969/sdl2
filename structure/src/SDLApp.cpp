@@ -25,9 +25,12 @@ SDLApp::SDLApp(const char* title, int x, int y, int w, int h){
         throw std::runtime_error("renderer not created");
     }
 
-    m_windowHeight = w;
-    m_windowWidth = h;
-    m_framerate = 90;
+    m_windowWidth = w;
+    m_windowHeight = h;
+    m_minWindowWidth = 480;
+    m_minWindowHeight = 360;
+    m_framerate = 120;
+    SDL_SetWindowMinimumSize(window,m_minWindowWidth,m_minWindowHeight);
 
 }
 
@@ -54,11 +57,12 @@ void SDLApp::runLoop(){
         renderLoop();
         SDL_RenderPresent(m_renderer);
         Uint64 end = SDL_GetTicks();
-        Uint64 timeElapsed = end - start;
-        Uint64 waitTime = ((double)1/m_framerate)*1000;
+        double timeElapsed = end - start;
+        m_framerate = 1000.0/timeElapsed;
+        /* Uint64 waitTime = ((double)1/m_framerate)*1000;
         if(timeElapsed < waitTime){
             SDL_Delay(waitTime - timeElapsed);
-        }
+        } */
     }
 }
 
@@ -70,14 +74,26 @@ SDL_Renderer* SDLApp::getRenderer(){
     return m_renderer;
 }
 
-void SDLApp::setFrameCap(int framerate){
-    m_framerate = framerate;
+void SDLApp::setFrameCap(int framecap){
+    m_framecap = framecap;
 }
 
 int SDLApp::getWindowWidth(){
-    return m_windowHeight;   
+    return m_windowWidth;   
 }
 
 int SDLApp::getWindowHeight(){
-    return m_windowWidth;
+    return m_windowHeight;
+}
+
+int SDLApp::getMinWindowWidth(){
+    return m_minWindowWidth;
+}
+
+int SDLApp::getMinWindowHeight(){
+    return m_minWindowHeight;
+}
+
+double SDLApp::getFramerate(){
+    return m_framerate;
 }

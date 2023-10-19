@@ -1,11 +1,10 @@
-//on linux, compile with
-//g++ -std=c++17  -I include/ main.cpp src/*.cpp -o prog -lSDL2 -ldl
 
 //C++ standard libraries
 #include <iostream>
 #include <string>
 #include <memory>
 #include <vector>
+#include <random>
 //third party library
 #include <SDL2/SDL.h>
 
@@ -23,7 +22,7 @@ void handleEvents();
 void handleRender();
 
 int main(int argc, char* argv[]){
-    app = new SDLApp("Collision Detection",500,300,640,480);
+    app = new SDLApp("Collision Detection",0,0,1280,720);
     sprite1 = new GameEntity(app->getRenderer(),"./assets/redBall.bmp");
     sprite2 = new GameEntity(app->getRenderer(), "./assets/cricketBat.bmp");
     sprite1->getRect().setPosition(200,200);
@@ -69,26 +68,32 @@ void handleEvents(){
 
 void handleRender(){
     //dynamic but not concerned with any events, so in render callback
-    static int xPos = 0;
-    static int yPos = 0;
+    static double xPos = 0;
+    static double yPos = 0;
     static bool right = true;
     static bool down = true;
-    static uint64_t time = SDL_GetTicks64();
-    static uint64_t wait = 0;
+    static int windowWidth = app->getWindowWidth();
+    static int windowHeight = app->getWindowHeight();
+    static int minWindowWidth = app->getMinWindowWidth();
+    static int minWindowHeight = app->getMinWindowHeight();
+
+    static double time = 1.1 + (windowWidth - minWindowWidth)*0.00030;
+
+    double deltaX = windowWidth/(app->getFramerate() * time);
     if(right){
-        ++xPos;
+        xPos = xPos + deltaX;
     }else{
-        --xPos;
+        xPos = xPos - deltaX;
     }
 
     if(down){
-        ++yPos;
+        yPos = yPos + deltaX/2;
     }
     else{
-        --yPos;
+        yPos = yPos - deltaX/2;
     }
 
-    if(xPos >= app->getWindowWidth()){
+    if(xPos >= windowWidth){
         right = false;
     }
     else if(xPos <= 0){
@@ -96,7 +101,7 @@ void handleRender(){
     }
 
 
-    if(yPos >= app->getWindowHeight()){
+    if(yPos >= windowHeight){
         down = false;
     }
     else if(yPos <= 0){
@@ -106,10 +111,4 @@ void handleRender(){
     sprite1->getRect().setPosition(xPos,yPos);
     sprite1->render();
     sprite2->render();
-
-    if(xPos == app->getWindowWidth() || xPos == 0 ){
-        wait = SDL_GetTicks64() - time;
-        time += wait;
-        std::cout << "Change in direction after: " << wait/1000.0 << " seconds!"  << std::endl;
-    }
 }

@@ -17,9 +17,12 @@ class SDLApp{
     void runLoop();
     void stopRunLoop();
     SDL_Renderer* getRenderer();
-    void setFrameCap(int framerate);
+    void setFrameCap(int framecap);
     int getWindowWidth();
     int getWindowHeight();
+    int getMinWindowWidth();
+    int getMinWindowHeight();
+    double getFramerate();
 
     private:
     SDL_Renderer* m_renderer;
@@ -27,9 +30,12 @@ class SDLApp{
     p_eventLoop eventLoop;
     p_renderLoop renderLoop;
     bool gameIsRunning = true;
-    int m_windowHeight;
     int m_windowWidth;
-    int m_framerate;
+    int m_windowHeight;
+    int m_minWindowWidth;
+    int m_minWindowHeight;
+    int m_framecap;
+    double m_framerate;
 };
 
 #endif
