@@ -30,7 +30,7 @@ int main(int argc, char* argv[]){
     
     app->setEventCallback(handleEvents);
     app->setRenderCallback(handleRender);
-    app->setFrameCap(400);
+    app->setFrameCap(500);
     app->runLoop();
 
     //free allocated memory

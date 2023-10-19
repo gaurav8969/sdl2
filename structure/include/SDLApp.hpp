@@ -35,7 +35,9 @@ class SDLApp{
     int m_minWindowWidth;
     int m_minWindowHeight;
     int m_framecap;
+    double m_waittime;
     double m_framerate;
+    bool isFramerateCapped;
 };
 
 #endif

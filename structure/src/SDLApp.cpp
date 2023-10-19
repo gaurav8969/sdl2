@@ -31,7 +31,7 @@ SDLApp::SDLApp(const char* title, int x, int y, int w, int h){
     m_minWindowHeight = 360;
     m_framerate = 120;
     SDL_SetWindowMinimumSize(window,m_minWindowWidth,m_minWindowHeight);
-
+    isFramerateCapped = false;
 }
 
 SDLApp::~SDLApp(){
@@ -58,11 +58,10 @@ void SDLApp::runLoop(){
         SDL_RenderPresent(m_renderer);
         Uint64 end = SDL_GetTicks();
         double timeElapsed = end - start;
-        m_framerate = 1000.0/timeElapsed;
-        /* Uint64 waitTime = ((double)1/m_framerate)*1000;
-        if(timeElapsed < waitTime){
-            SDL_Delay(waitTime - timeElapsed);
-        } */
+        if(isFramerateCapped && (timeElapsed < m_waittime)){
+            SDL_Delay(m_waittime - timeElapsed);
+        }
+        m_framerate = 1000.0/(SDL_GetTicks()-start); //actual framerate inclusive of the delay
     }
 }
 
@@ -75,7 +74,9 @@ SDL_Renderer* SDLApp::getRenderer(){
 }
 
 void SDLApp::setFrameCap(int framecap){
+    isFramerateCapped = true;
     m_framecap = framecap;
+    m_waittime = 1000.0/framecap; 
 }
 
 int SDLApp::getWindowWidth(){
