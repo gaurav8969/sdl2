@@ -1,5 +1,6 @@
 #include <iostream>
 #include <utility>
+#include <exception>
 
 #include "SDL2/SDL.h"
 #include "GameEntity.hpp"
@@ -26,6 +27,12 @@ GameEntity::~GameEntity(){
     m_sprite = nullptr;
 }
 
+void GameEntity::render(){
+    SDL_SetRenderDrawColor(m_renderer,255,0,255,255);
+    SDL_RenderDrawRect(m_renderer,m_colliderComponent->getCollider());
+    m_sprite->render();
+}
+
 TexturedRectangle& GameEntity::getRect(){
     return *m_sprite;
 }
@@ -33,15 +40,6 @@ TexturedRectangle& GameEntity::getRect(){
 bool GameEntity::isColliding(GameEntity* sprite){
     bool isColliding = m_colliderComponent->isColliding(sprite->m_colliderComponent);
     return isColliding;
-}
-
-void GameEntity::render(){
-    //if the allocation failed
-    if(m_sprite != nullptr){
-        m_sprite->render();
-    }else{
-        std::cout << "Allocation failed" << std::endl;
-    }
 }
 
 void GameEntity::updatePosition(int x, int y){

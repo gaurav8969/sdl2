@@ -19,7 +19,7 @@ class GameEntity{
     //update constituent components like collider and sprite
     void updatePosition(int,int);
     void updateSize(int,int); 
-
+    
     private:
     SDL_Renderer* m_renderer;
     Collider2D* m_colliderComponent;

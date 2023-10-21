@@ -29,7 +29,7 @@ void TexturedRectangle::setPosition(std::pair<int,int>position){
 }
 
 void TexturedRectangle::render(SDL_Rect* source){
-     //textured rectangles have generalized use due to render copy using rectangles
+    //textured rectangles have generalized use due to render copy using rectangles
     SDL_RenderCopy(m_renderer,m_texture,source,&m_rectangle);
 }
 
