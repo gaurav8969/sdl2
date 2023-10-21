@@ -29,7 +29,7 @@ SDLApp::SDLApp(const char* title, int x, int y, int w, int h){
     m_windowHeight = h;
     m_minWindowWidth = 480;
     m_minWindowHeight = 360;
-    m_framerate = 120;
+    m_framerate = 120; //intial value 
     SDL_SetWindowMinimumSize(window,m_minWindowWidth,m_minWindowHeight);
     isFramerateCapped = false;
 }
@@ -76,7 +76,7 @@ SDL_Renderer* SDLApp::getRenderer(){
 void SDLApp::setFrameCap(int framecap){
     isFramerateCapped = true;
     m_framecap = framecap;
-    m_waittime = 1000.0/framecap; 
+    m_waittime = 1000.0/framecap;
 }
 
 int SDLApp::getWindowWidth(){

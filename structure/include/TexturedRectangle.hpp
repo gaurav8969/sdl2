@@ -3,6 +3,7 @@
 
 #include <string>
 #include <SDL2/SDL.h>
+#include <utility>
 
 #include "AnimateSprite.hpp"
 
@@ -12,12 +13,13 @@ class TexturedRectangle{
 
         //compiler-generated copy constructor works, shallow copy is desired
         ~TexturedRectangle();
-
-        void setDimensions(int, int);
-        void setPosition(int, int); //helps debug
+        //w,h ordered pair
+        void setDimensions(std::pair<int,int>);
+        //x,y orderered pair
+        void setPosition(std::pair<int,int>);
         void render(SDL_Rect* = nullptr);
-        bool isColliding(const TexturedRectangle&);
-        void getCoordinates();
+        std::pair<int,int> getDimensions();
+        std::pair<int,int> getPosition();
 
     private:
     SDL_Rect m_rectangle;

@@ -10,7 +10,7 @@ TexturedRectangle::TexturedRectangle
     m_texture = SDL_CreateTextureFromSurface(m_renderer,m_surface);
     m_rectangle.x = 100;
     m_rectangle.y = 100;
-    m_rectangle.w = 100;
+    m_rectangle.w = 100;    
     m_rectangle.h = 100;
 }
 
@@ -18,61 +18,25 @@ TexturedRectangle::~TexturedRectangle(){
     SDL_DestroyTexture(m_texture);
 }
 
-//set rectangle properties ig
-void TexturedRectangle::setDimensions (int w, int h){
-    m_rectangle.w = w;
-    m_rectangle.h = h;
+void TexturedRectangle::setDimensions (std::pair<int,int>dimensions){
+    m_rectangle.w = dimensions.first;
+    m_rectangle.h = dimensions.first;
 }
 
-void TexturedRectangle::setPosition(int x, int y){
-    m_rectangle.x = x;
-    m_rectangle.y = y;
+void TexturedRectangle::setPosition(std::pair<int,int>position){
+    m_rectangle.x = position.first;
+    m_rectangle.y = position.second;
 }
-
-void TexturedRectangle::getCoordinates(){
-    std::cout << "x is " << m_rectangle.x << std::endl;
-    std::cout << "y is " << m_rectangle.y << std::endl;
-    std::cout << "w is " << m_rectangle.w << std::endl;
-    std::cout << "h is " << m_rectangle.h << std::endl;
-}
-
-
 
 void TexturedRectangle::render(SDL_Rect* source){
      //textured rectangles have generalized use due to render copy using rectangles
     SDL_RenderCopy(m_renderer,m_texture,source,&m_rectangle);
 }
 
-bool TexturedRectangle::isColliding(const TexturedRectangle& rectangle){
-    //horizontal axis
-    int m_xStart = m_rectangle.x;
-    int m_xEnd = m_xStart + m_rectangle.w;
-    int xStart = rectangle.m_rectangle.x;
-    int xEnd = xStart + rectangle.m_rectangle.w;
+std::pair<int,int> TexturedRectangle::getDimensions(){
+    return std::make_pair(m_rectangle.x,m_rectangle.y);
+}
 
-    int m_xLength = m_rectangle.w;
-    int xLength = rectangle.m_rectangle.w;
-    int xDistance = std::max(m_xEnd,xEnd) - std::min(m_xStart,xStart);
-    
-    bool xOverlap = false;
-    if ( xDistance <  m_xLength + xLength){
-        xOverlap = true;
-    }
-
-    //vertical axis
-    int m_yStart = m_rectangle.y;
-    int m_yEnd = m_yStart + m_rectangle.h;
-    int yStart = rectangle.m_rectangle.y;
-    int yEnd = yStart + rectangle.m_rectangle.h;
-
-    int m_yLength = m_rectangle.h;
-    int yLength = rectangle.m_rectangle.h;
-    int yDistance = (std::max(m_yEnd,yEnd) - std::min(m_yStart,yStart));
-    
-    bool yOverlap = false;
-    if ( yDistance <  m_yLength + yLength){
-        yOverlap = true;
-    }
-
-    return xOverlap && yOverlap;
+std::pair<int,int> TexturedRectangle::getPosition(){
+    return std::make_pair(m_rectangle.x,m_rectangle.y);
 }

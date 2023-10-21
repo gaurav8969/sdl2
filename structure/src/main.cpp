@@ -22,15 +22,15 @@ void handleEvents();
 void handleRender();
 
 int main(int argc, char* argv[]){
-    app = new SDLApp("Collision Detection",0,0,1280,720);
+    app = new SDLApp("Collision Detection",0,0,640,480);
     sprite1 = new GameEntity(app->getRenderer(),"./assets/redBall.bmp");
     sprite2 = new GameEntity(app->getRenderer(), "./assets/cricketBat.bmp");
-    sprite1->getRect().setPosition(200,200);
-    sprite2->getRect().setPosition(100,100);
+    sprite1->updatePosition(200,200);
+    sprite2->updatePosition(100,100);
     
     app->setEventCallback(handleEvents);
     app->setRenderCallback(handleRender);
-    app->setFrameCap(500);
+    app->setFrameCap(120);
     app->runLoop();
 
     //free allocated memory
@@ -50,11 +50,11 @@ void handleEvents(){
 
         int xPos,yPos; //mouse position
         SDL_GetMouseState(&xPos,&yPos);
-        sprite2->getRect().setPosition(xPos,yPos);
+        sprite2->updatePosition(xPos,yPos);
 
         if(event.type == SDL_MOUSEBUTTONDOWN){
             if(event.button.button == SDL_BUTTON_LEFT){
-                bool colliding = sprite2->isColliding(*sprite1);
+                bool colliding = sprite2->isColliding(sprite1);
                 if(colliding){
                     std::cout <<"My function says there is a collision.\n";
                 }
@@ -108,7 +108,7 @@ void handleRender(){
         down = true;
     }
 
-    sprite1->getRect().setPosition(xPos,yPos);
+    sprite1->updatePosition(xPos,yPos);
     sprite1->render();
     sprite2->render();
 }

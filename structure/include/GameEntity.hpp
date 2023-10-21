@@ -5,6 +5,7 @@
 //third party inclusions
 #include "SDL2/SDL.h"
 #include "TexturedRectangle.hpp"
+#include "Collider2D.hpp"
 
 class GameEntity{
     public:
@@ -14,10 +15,14 @@ class GameEntity{
 
     void render();
     TexturedRectangle& getRect();
-    bool isColliding(GameEntity& sprite);
+    bool isColliding(GameEntity* sprite);
+    //update constituent components like collider and sprite
+    void updatePosition(int,int);
+    void updateSize(int,int); 
 
     private:
     SDL_Renderer* m_renderer;
+    Collider2D* m_colliderComponent;
     TexturedRectangle* m_sprite;
 };
 
