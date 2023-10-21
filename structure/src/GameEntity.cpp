@@ -29,6 +29,7 @@ GameEntity::~GameEntity(){
 
 void GameEntity::render(){
     SDL_SetRenderDrawColor(m_renderer,255,0,255,255);
+    //could draw multiple debug boxes for various collider components
     SDL_RenderDrawRect(m_renderer,m_colliderComponent->getCollider());
     m_sprite->render();
 }
