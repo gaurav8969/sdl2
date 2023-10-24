@@ -13,7 +13,7 @@ class Collider2D{
     void setPosition(std::pair<int,int>);
     void setDimensions(std::pair<int, int>);
     SDL_Rect* getCollider();
-    
+
     private:
     SDL_Rect* m_collider;
 };

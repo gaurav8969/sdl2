@@ -58,5 +58,5 @@ void Collider2D::setDimensions(std::pair<int,int> dimensions){
 }
 
 SDL_Rect* Collider2D::getCollider(){
-    return m_collider;
+return m_collider;      
 }

@@ -2,6 +2,8 @@
 #define GAME_ENTITY_HPP
 
 #include <string>
+#include <vector>
+#include <memory>
 //third party inclusions
 #include "SDL2/SDL.h"
 #include "TexturedRectangle.hpp"
@@ -13,16 +15,19 @@ class GameEntity{
     GameEntity(SDL_Renderer*,std::string spritepath);
     ~GameEntity();
 
+    void addCollider(int xOffset, int yOffset, int width, int height);
     void render();
-    TexturedRectangle& getRect();
-    bool isColliding(GameEntity* sprite);
+    //index of collider of this object and collider of the other GameEntity object in collision
+    bool isColliding(GameEntity* sprite,size_t collider,size_t  collidingWith);
+    //Collider2D* getCollider(size_t);
     //update constituent components like collider and sprite
     void updatePosition(int,int);
-    void updateSize(int,int); 
-    
+    void updateSpriteSize(int,int);
+    void updateColliderSize(size_t, int,int);
+
     private:
     SDL_Renderer* m_renderer;
-    Collider2D* m_colliderComponent;
+    std::vector<std::unique_ptr<Collider2D>> m_colliderComponents;
     TexturedRectangle* m_sprite;
 };
 

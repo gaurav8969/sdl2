@@ -17,8 +17,6 @@
 SDLApp* app; 
 GameEntity* sprite1;
 GameEntity* sprite2;
-int ballWidth;
-int ballHeight;
 
 void handleEvents();
 void handleRender();
@@ -26,13 +24,16 @@ void handleRender();
 int main(int argc, char* argv[]){
     app = new SDLApp("Collision Detection",0,0,640,480);
     sprite1 = new GameEntity(app->getRenderer(),"./assets/redBall.bmp");
-    ballWidth = 100;
-    ballHeight = 100;
     sprite2 = new GameEntity(app->getRenderer(), "./assets/cricketBat.bmp");
+
+    sprite1->addCollider(0,0,50,50);
+    sprite2->addCollider(75,0,75,50);
+    sprite2->addCollider(50,50,75,50);
+    sprite2->addCollider(0,100,75,50);
     sprite1->updatePosition(200,200);
     sprite2->updatePosition(100,100);
-    sprite1->updateSize(ballWidth,ballHeight);
-    sprite2->updateSize(150,150);
+    sprite1->updateSpriteSize(50,50); 
+    sprite2->updateSpriteSize(150,150);
     
     app->setEventCallback(handleEvents);
     app->setRenderCallback(handleRender);
@@ -60,7 +61,7 @@ void handleEvents(){
 
         if(event.type == SDL_MOUSEBUTTONDOWN){
             if(event.button.button == SDL_BUTTON_LEFT){
-                bool colliding = sprite2->isColliding(sprite1);
+                bool colliding = sprite2->isColliding(sprite1,0,0);
                 if(colliding){
                     std::cout <<"My function says there is a collision.\n";
                 }
@@ -99,7 +100,7 @@ void handleRender(){
         yPos = yPos - deltaX/2;
     }
 
-    if(xPos >= windowWidth-ballWidth){
+    if(xPos >= windowWidth-50){
         right = false;
     }
     else if(xPos <= 0){
@@ -107,7 +108,7 @@ void handleRender(){
     }
 
 
-    if(yPos >= windowHeight-ballHeight){
+    if(yPos >= windowHeight-50){
         down = false;
     }
     else if(yPos <= 0){
