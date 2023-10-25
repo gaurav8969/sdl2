@@ -1,3 +1,5 @@
+#include<iterator>
+
 #include "ResourceManager.hpp"
 //the empty functions below are needed for a singleton
 ResourceManager::ResourceManager(){
@@ -6,6 +8,13 @@ ResourceManager::ResourceManager(){
 
 ResourceManager::ResourceManager(const ResourceManager&){
 
+}
+
+ResourceManager::~ResourceManager(){
+    std::unordered_map<std::string,SDL_Surface*>::iterator it;
+    for(it = m_surfaces.begin();it != m_surfaces.end(); it++){
+        SDL_FreeSurface(it->second);
+    }
 }
 
 ResourceManager& ResourceManager::GetInstance(){

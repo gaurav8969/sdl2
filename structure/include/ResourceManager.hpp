@@ -12,8 +12,9 @@ class ResourceManager
     ResourceManager();
     ResourceManager(const ResourceManager&);
     ResourceManager& operator= (const ResourceManager&)= delete;
+    ~ResourceManager();
 
-    std::unordered_map<std::string, SDL_Surface *> m_surfaces;
+    std::unordered_map<std::string, SDL_Surface *> m_surfaces;  
 
     public:
         static ResourceManager& GetInstance();
