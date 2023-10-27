@@ -27,8 +27,13 @@ class GameEntity{
 
     private:
     SDL_Renderer* m_renderer;
+    SDL_Surface* m_scaledSurface;
     std::vector<std::unique_ptr<Collider2D>> m_colliderComponents;
     TexturedRectangle* m_sprite;
+    std::string m_spritepath;
+    std::vector<int>* m_mask;
+    int m_w,m_h; //sprite size
+    void createMask();
 };
 
 #endif

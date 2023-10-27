@@ -16,6 +16,7 @@ class Collider2D{
 
     private:
     SDL_Rect* m_collider;
+    SDL_Rect m_intersection;
 };
 
 #endif

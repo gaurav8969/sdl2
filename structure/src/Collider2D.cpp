@@ -1,4 +1,6 @@
 #include <exception>
+#include <algorithm>
+
 #include "Collider2D.hpp"
 
 Collider2D::Collider2D(){
@@ -44,7 +46,12 @@ bool Collider2D::isColliding(const Collider2D * collider){
         yOverlap = true;
     }
 
-    return xOverlap && yOverlap;
+    bool isColliding = xOverlap && yOverlap;
+    if(isColliding){
+        SDL_IntersectRect(m_collider,collider->m_collider,&m_intersection);
+    }
+
+    return isColliding;
 }
 
 void Collider2D::setPosition(std::pair<int,int> position){

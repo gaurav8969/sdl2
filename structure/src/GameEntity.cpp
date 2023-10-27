@@ -3,12 +3,16 @@
 
 #include "SDL2/SDL.h"
 #include "GameEntity.hpp"
+#include "ResourceManager.hpp"
 
 using std::pair;
 
 GameEntity::GameEntity(SDL_Renderer* renderer, std::string spritepath){
-    m_sprite = new TexturedRectangle(renderer, spritepath); 
+    m_sprite = new TexturedRectangle(renderer, spritepath);
     m_renderer = renderer;
+    m_spritepath = spritepath;
+    m_scaledSurface = ResourceManager::GetInstance().GetSurface("assets/blackSurface4K.bmp");
+    this->updateSpriteSize(100,100);
 
     if(!m_sprite){
         throw std::bad_alloc();
@@ -39,7 +43,7 @@ void GameEntity::addCollider(int xOffset, int yOffset, int width, int height){
 }
 
 void GameEntity::render(){
-    SDL_SetRenderDrawColor(m_renderer,255,0,255,255);
+    SDL_SetRenderDrawColor(m_renderer,0,0,0,255);
     //could draw multiple debug boxes for various collider components
     m_sprite->render();
     for(auto& collider: m_colliderComponents){
@@ -74,9 +78,41 @@ void GameEntity::updatePosition(int x, int y){
 void GameEntity::updateSpriteSize(int w, int h){
     std::pair<int,int> size = std::make_pair(w,h);
     m_sprite->setDimensions(size);
+    m_w = w;
+    m_h = h;
+
+    createMask();
 }
 
 void GameEntity::updateColliderSize(size_t index, int w, int h){
     std::pair<int,int> size = std::make_pair(w,h);
     m_colliderComponents[index]->setDimensions(size);
+}
+
+void GameEntity::createMask(){
+    delete m_mask;
+    m_mask = new std::vector<int>();
+
+    SDL_Surface* surface = ResourceManager::GetInstance().GetSurface(m_spritepath);
+    SDL_Rect scaleRect;
+    scaleRect.x = 0;
+    scaleRect.y = 0;
+    scaleRect.w = m_w;
+    scaleRect.h = m_h;
+    SDL_BlitScaled(surface,NULL,m_scaledSurface,&scaleRect);
+
+    SDL_LockSurface(m_scaledSurface);
+    int colourchannels = m_scaledSurface->pitch/m_scaledSurface->w;
+    Uint8* pixels = (Uint8*)m_scaledSurface->pixels;
+    SDL_UnlockSurface(m_scaledSurface);
+    for(int y = 0; y < m_h; y++){
+        for(int x = 0; x < m_w*colourchannels; x+=colourchannels){
+            if(pixels[y*(m_w*colourchannels) + x + 3 ] < 50){
+                m_mask->push_back(0);
+            }
+            else{
+                m_mask->push_back(1);
+            }
+        }
+    }
 }

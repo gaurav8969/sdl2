@@ -52,7 +52,7 @@ void SDLApp::runLoop(){
         Uint64 start = SDL_GetTicks();
         eventLoop();
 
-        SDL_SetRenderDrawColor(m_renderer,0,0,255,SDL_ALPHA_OPAQUE);
+        SDL_SetRenderDrawColor(m_renderer,0,255,100,SDL_ALPHA_OPAQUE);
         SDL_RenderClear(m_renderer);
         renderLoop();
         SDL_RenderPresent(m_renderer);
