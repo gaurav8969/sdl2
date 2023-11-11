@@ -3,11 +3,9 @@
 #include "ResourceManager.hpp"
 //the empty functions below are needed for a singleton
 ResourceManager::ResourceManager(){
-
 }
 
 ResourceManager::ResourceManager(const ResourceManager&){
-
 }
 
 ResourceManager::~ResourceManager(){

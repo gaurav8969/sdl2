@@ -18,19 +18,19 @@ class GameEntity{
     void addCollider(int xOffset, int yOffset, int width, int height);
     void render();
     //index of collider of this object and collider of the other GameEntity object in collision
-    bool isColliding(GameEntity* sprite,size_t collider,size_t  collidingWith);
-    //Collider2D* getCollider(size_t);
-    //update constituent components like collider and sprite
+    bool isColliding(GameEntity* sprite, size_t collider, size_t collidingWith, bool IsPixelPerfect = false);
     void updatePosition(int,int);
     void updateSpriteSize(int,int);
     void updateColliderSize(size_t, int,int);
+    //click inside a sprite boundary to see the details of the clicked pixel
+    void checkPixel(int x, int y);
 
     private:
     SDL_Renderer* m_renderer;
-    SDL_Surface* m_scaledSurface;
+    SDL_Surface* m_surface;
+    SDL_Rect m_intersection;
     std::vector<std::unique_ptr<Collider2D>> m_colliderComponents;
     TexturedRectangle* m_sprite;
-    std::string m_spritepath;
     std::vector<int>* m_mask;
     int m_w,m_h; //sprite size
     void createMask();

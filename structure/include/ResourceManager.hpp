@@ -18,7 +18,6 @@ class ResourceManager
 
     public:
         static ResourceManager& GetInstance();
-
         SDL_Surface* GetSurface(const std::string& filepath);
 };
 

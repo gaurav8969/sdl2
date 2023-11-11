@@ -35,8 +35,10 @@ SDLApp::SDLApp(const char* title, int x, int y, int w, int h){
 }
 
 SDLApp::~SDLApp(){
-    SDL_DestroyWindow(window);
     SDL_DestroyRenderer(m_renderer);
+    SDL_DestroyWindow(window);
+    window = nullptr;
+    m_renderer = nullptr;
 }
 
 void SDLApp::setEventCallback(p_eventLoop func){
