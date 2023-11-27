@@ -31,7 +31,7 @@ run: $(BIN)/$(EXECUTABLE)
 	./$(BIN)/$(EXECUTABLE)
 
 clean:
-	-rm $(BIN)/*
-	-rm $(OBJ)/*
+	rm $(BIN)/*
+	rm $(OBJ)/*
 
 -include $(OBJ)/*.d

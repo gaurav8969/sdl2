@@ -1,7 +1,7 @@
 #include<iterator>
 
 #include "ResourceManager.hpp"
-//the empty functions below are needed for a singleton
+//the empty constructors below are needed for a singleton
 ResourceManager::ResourceManager(){
 }
 
@@ -18,6 +18,8 @@ ResourceManager::~ResourceManager(){
 ResourceManager& ResourceManager::GetInstance(){
     //ResourceManager pointer below is initialized only once in program, so only one allocation
     //is made, thus only one instance of ResourceManager is created, and thus a singleton class
+    //the allocation below happens before the main function, at compile time, it does not wait for the
+    //function to get called
     static ResourceManager* s_instance = new ResourceManager();
     return *s_instance; //hoping they don't take its address and call delete on it
 }

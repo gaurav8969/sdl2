@@ -4,36 +4,66 @@
 #include <string>
 #include <vector>
 #include <memory>
-//third party inclusions
+#include <utility>
+#include <cassert>
+
+//header file inclusions
 #include "SDL2/SDL.h"
-#include "TexturedRectangle.hpp"
-#include "Collider2D.hpp"
+#include "CResources.hpp"
+#include "CCollider.hpp"
+#include "Component.hpp"
+#include "CPhysics.hpp"
+
+using Group = std::size_t;
+constexpr std::size_t maxGroups{32};
+using groupBitset = std::bitset<maxGroups>;
 
 class GameEntity{
-    public:
-    GameEntity()=delete;
-    GameEntity(SDL_Renderer*,std::string spritepath);
-    ~GameEntity();
+public:
+    GameEntity()=default;
+    ~GameEntity()=default;
 
-    void addCollider(int xOffset, int yOffset, int width, int height);
     void render();
-    //index of collider of this object and collider of the other GameEntity object in collision
-    bool isColliding(GameEntity* sprite, size_t collider, size_t collidingWith, bool IsPixelPerfect = false);
-    void updatePosition(int,int);
-    void updateSpriteSize(int,int);
-    void updateColliderSize(size_t, int,int);
-    //click inside a sprite boundary to see the details of the clicked pixel
-    void checkPixel(int x, int y);
+    
+    template <typename T, typename... TArgs>
+    T& addComponent(TArgs&&... args){
+        T* c(new T(std::forward<TArgs>(args)...));
+        componentBitset[getComponentID<T>()] = true;
+        componentArray[getComponentID<T>()] = c;
 
-    private:
-    SDL_Renderer* m_renderer;
-    SDL_Surface* m_surface;
-    SDL_Rect m_intersection;
-    std::vector<std::unique_ptr<Collider2D>> m_colliderComponents;
-    TexturedRectangle* m_sprite;
-    std::vector<int>* m_mask;
-    int m_w,m_h; //sprite size
-    void createMask();
+        c->init();
+        m_components.emplace_back(std::move(std::make_unique(c)));
+        c->m_entity = this;
+        return *c;
+
+    }
+
+    //memory will be released by unique ptrs when entity is destroyed
+    template <typename T>
+    void removeEntity(){
+        componentArray[getComponentID<T>()] = nullptr;
+        componentBitset[getComponentID<T>()] = false;
+    }
+
+    template <typename T>
+    bool hasComponent(){
+        return componentBitset[getComponentID<T>()];
+    }
+
+    template <typename T>
+    T& getComponent(){
+        assert(this->hasComponent<T>());
+        auto ptr{componentArray[getComponentID<T>()]};
+        return *reinterpret_cast<T*>(ptr);
+    }
+
+public:    
+    ComponentBitset componentBitset;
+    ComponentArray componentArray;//stores raw pointers for general use
+
+private:
+    std::vector<std::unique_ptr<Component>> m_components; //unique pointers for memory management
+
 };
 
 #endif

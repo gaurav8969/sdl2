@@ -8,7 +8,7 @@
 //third party library
 #include <SDL2/SDL.h>
 
-#include "TexturedRectangle.hpp"
+#include "CResources.hpp"
 #include "ResourceManager.hpp"
 #include "SDLApp.hpp"
 #include "GameEntity.hpp"
@@ -23,17 +23,18 @@ void handleRender();
 
 int main(int argc, char* argv[]){
     app = new SDLApp("Collision Detection",0,0,800,640);
-    sprite1 = new GameEntity(app->getRenderer(),"./assets/redBall.bmp");
-    sprite2 = new GameEntity(app->getRenderer(), "./assets/cricketBat.bmp");
-    
+    sprite1 = new GameEntity();
+    sprite2 = new GameEntity();
+
+/*    
     sprite1->updatePosition(350,350);
     sprite1->updateSpriteSize(100,100);
     
-    sprite2->addCollider(100,0,100,75);
+     sprite2->addCollider(100,0,100,75);
     sprite2->addCollider(50,75,100,50);
-    sprite2->addCollider(0,125,75,75);
+    sprite2->addCollider(0,125,75,75); 
     sprite2->updatePosition(100,100);
-    sprite2->updateSpriteSize(200,200);
+    sprite2->updateSpriteSize(200,200);*/
     
     app->setEventCallback(handleEvents);
     app->setRenderCallback(handleRender);
@@ -57,17 +58,17 @@ void handleEvents(){
 
         int xPos,yPos; //mouse position
         SDL_GetMouseState(&xPos,&yPos);
-        sprite2->updatePosition(xPos,yPos);
+        //sprite2->updatePosition(xPos,yPos);
 
         if(event.type == SDL_MOUSEBUTTONDOWN){
             if(event.button.button == SDL_BUTTON_LEFT){
-                bool colliding = sprite2->isColliding(sprite1,0,0,true);
+                /* bool colliding = sprite2->isColliding(sprite1,0,0,true);
                 if(colliding){
                     std::cout <<"My function says there is a collision.\n";
                 }
                 else{
                     std::cout << "My function says there is no collision\n";
-                }
+                } */
             }
         }
     }
@@ -83,9 +84,9 @@ void handleRender(){
     static int windowHeight = app->getWindowHeight();
     static int minWindowWidth = app->getMinWindowWidth();
     static int minWindowHeight = app->getMinWindowHeight();
-
-    static double time = 1.1 + (windowWidth - minWindowWidth)*0.00030;
     
+    static double time = 1.1 + (windowWidth - minWindowWidth)*0.00030;
+
     double deltaX = windowWidth/(app->getFramerate() * time);
     if(right){
         xPos = xPos + deltaX;
@@ -100,7 +101,7 @@ void handleRender(){
         yPos = yPos - deltaX/2;
     }
 
-    if(xPos >= windowWidth-50){
+    if(xPos >= windowWidth-100){
         right = false;
     }
     else if(xPos <= 0){
@@ -108,14 +109,14 @@ void handleRender(){
     }
 
 
-    if(yPos >= windowHeight-50){
+    if(yPos >= windowHeight-100){
         down = false;
     }
     else if(yPos <= 0){
         down = true;
     }
 
-    sprite1->updatePosition(xPos,yPos);
-    sprite1->render();
-    sprite2->render();
+    //sprite1->updatePosition(xPos,yPos);
+    /* sprite1->render();
+    sprite2->render(); */
 }
