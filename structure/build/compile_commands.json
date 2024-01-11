@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/yash/repos/sdl2/structure/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/experimentSDL2.dir/main.cpp.o -c /home/yash/repos/sdl2/structure/main.cpp",
+  "file": "/home/yash/repos/sdl2/structure/main.cpp"
+}
+]

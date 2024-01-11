@@ -1,0 +1,5 @@
+/home/yash/repos/sdl2/structure/build/CMakeFiles/experimentSDL2.dir
+/home/yash/repos/sdl2/structure/build/CMakeFiles/package.dir
+/home/yash/repos/sdl2/structure/build/CMakeFiles/package_source.dir
+/home/yash/repos/sdl2/structure/build/CMakeFiles/edit_cache.dir
+/home/yash/repos/sdl2/structure/build/CMakeFiles/rebuild_cache.dir
