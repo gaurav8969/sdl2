@@ -9,7 +9,6 @@
 #include "ResourceManager.hpp"
 
 using std::pair;
-
 GameEntity::GameEntity(SDL_Renderer* renderer, std::string spritepath){
     m_sprite = new TexturedRectangle(renderer, spritepath);
     m_surface = ResourceManager::GetInstance().GetSurface(spritepath);

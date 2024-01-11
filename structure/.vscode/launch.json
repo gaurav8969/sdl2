@@ -6,7 +6,7 @@
             "name": "(gdb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/prog",
+            "program": "${workspaceFolder}/build/prog",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
