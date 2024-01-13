@@ -1,0 +1,1 @@
+To build you may either use the build.sh bash file or the CMakeLists.txt, th FindSDL2TTF.cmake can be found in ./cmake/
