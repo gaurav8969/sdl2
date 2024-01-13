@@ -18,10 +18,12 @@ Text::Text(SDL_Renderer* renderer, int shape){
         std::cout << "Could not load font" << std::endl;
     }
     std::string text;
-    if(shape){
+    if(shape == 1){
         text = "Game Over: Cross won!";
-    }else{
+    }else if(shape == 0){
         text = "Game Over: Circle won!";
+    }else if(shape == -1){
+        text = "The game has been tied!";
     }
 
     // Pixels from our text

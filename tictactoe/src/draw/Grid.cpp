@@ -48,7 +48,6 @@ void Grid::fill(SDL_Renderer* renderer){
 }
 
 void Grid::update(int position){
-    
     if(!over){
         int index = position - 1;
         if(board[index] != -1){return;}
@@ -61,11 +60,19 @@ void Grid::update(int position){
         }
 
         if(isOver()){
+            if(turn == CROSS){
+                won = CIRCLE;
+            }else{
+                won = CROSS;
+            }
             over = true;
         }
+
+        if(isFilled()){
+            over = true;
+        }       
     }
-    
-}
+}    
 
 bool Grid::isOver(){
     //checking for column
@@ -128,4 +135,13 @@ bool Grid::isOver(){
 int Grid::query(int row, int column){
     int index = 3*row + column;
     return board[index];
+}
+
+bool Grid::isFilled(){
+    for(int i = 0; i < 8; i++){
+        if(board[i] == -1){
+            return false;
+        }
+    }
+    return true;
 }

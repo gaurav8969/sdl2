@@ -74,7 +74,7 @@ void handleRender(){
     if(grid->gameOver()){
         if(over < 0){
             //must be the turn of whoever lost, so  we flip it to get the winner
-            int shape = (grid->getTurn())?0:1;
+            int shape = grid->whoWon();
             text = new Text(app->getRenderer(), shape);
             std::cout << "Is over!" << std::endl;
             over++;

@@ -14,7 +14,7 @@ MACRO(HEADER_DIRECTORIES return_list)
     LIST(REMOVE_DUPLICATES dir_list)
     SET(${return_list} ${dir_list})
 ENDMACRO()
-    
+
 HEADER_DIRECTORIES(header_list)
 include_directories(${header_list})
 

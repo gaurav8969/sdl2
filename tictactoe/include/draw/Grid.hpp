@@ -13,9 +13,11 @@ public:
     void fill(SDL_Renderer* renderer);
     void update(int position);
     bool gameOver(){return over;}
-    int getTurn(){return this->turn;}
+    int whoWon(){return won;}
 private:
     bool isOver();
+    bool isFilled();
+    int won= -1;
     //query shape at any some particular row and column
     int query(int row, int column);
     int cornerX = 100, cornerY = 100;

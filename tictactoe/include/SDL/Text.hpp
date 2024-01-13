@@ -10,6 +10,7 @@ public:
     Text(SDL_Renderer* renderer, int shape);
     void render();
 private:
+    bool isFilled;
     SDL_Renderer* renderer;
     TTF_Font* ourFont;
     SDL_Texture* textureText;
