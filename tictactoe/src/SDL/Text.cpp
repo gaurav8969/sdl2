@@ -4,6 +4,12 @@
 #include "Text.hpp"
 
 Text::Text(SDL_Renderer* renderer, int shape){
+    if(TTF_Init() == -1){
+        std::cout << "Could not initailize SDL2_ttf, error: " << TTF_GetError() << std::endl; 
+    }else{
+        std::cout << "SDL2_ttf system ready to go!" << std::endl;
+    }
+
     this->renderer = renderer;
     // Load our font file and set the font size
     ourFont = TTF_OpenFont("./assets/fonts/pixelfont.ttf",32);

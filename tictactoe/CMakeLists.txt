@@ -32,4 +32,3 @@ find_package(SDL2TTF)
 include_directories(${SDL2_INCLUDE_DIRS})
 
 target_link_libraries(${EXEC} ${SDL2_LIBRARIES} ${SDL2TTF_LIBRARY})
-

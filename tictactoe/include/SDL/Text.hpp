@@ -13,7 +13,7 @@ private:
     SDL_Renderer* renderer;
     TTF_Font* ourFont;
     SDL_Texture* textureText;
-    SDL_Rect rectangle = {220,300,200,200};
+    SDL_Rect rectangle = {150,450,500,200};
 };
 
 #endif
