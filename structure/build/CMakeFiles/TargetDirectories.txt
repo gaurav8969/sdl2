@@ -1,3 +1,0 @@
-/home/yash/repos/sdl2/structure/build/CMakeFiles/prog.dir
-/home/yash/repos/sdl2/structure/build/CMakeFiles/edit_cache.dir
-/home/yash/repos/sdl2/structure/build/CMakeFiles/rebuild_cache.dir

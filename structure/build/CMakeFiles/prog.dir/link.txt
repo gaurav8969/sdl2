@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/prog.dir/src/Collider2D.cpp.o CMakeFiles/prog.dir/src/GameEntity.cpp.o CMakeFiles/prog.dir/src/ResourceManager.cpp.o CMakeFiles/prog.dir/src/SDLApp.cpp.o CMakeFiles/prog.dir/src/TexturedRectangle.cpp.o CMakeFiles/prog.dir/src/animateSprite/AnimateSprite.cpp.o CMakeFiles/prog.dir/src/main.cpp.o -o prog  -L/usr/lib/x86_64-linux-gnu  -lSDL2 

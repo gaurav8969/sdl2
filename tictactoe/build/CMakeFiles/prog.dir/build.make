@@ -172,8 +172,6 @@ prog: CMakeFiles/prog.dir/src/draw/Cross.cpp.o
 prog: CMakeFiles/prog.dir/src/draw/Grid.cpp.o
 prog: CMakeFiles/prog.dir/src/main.cpp.o
 prog: CMakeFiles/prog.dir/build.make
-prog: /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so
-prog: /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so
 prog: CMakeFiles/prog.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/yash/repos/sdl2/tictactoe/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable prog"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/prog.dir/link.txt --verbose=$(VERBOSE)
